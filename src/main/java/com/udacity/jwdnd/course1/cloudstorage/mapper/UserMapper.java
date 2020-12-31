@@ -13,8 +13,8 @@ public interface UserMapper {
   @Select("Select * from USERS where username=#{username}")
   User getUser(String username);
 
-  @Insert("Insert into USERS (username,salt,password,firstname,lastname) values(#{username},#{salt}, #{password},#{firstName}, #{lastName})")
-  @Options(useGeneratedKeys = true, keyProperty = "userId")
+  @Insert("Insert into USERS (username,salt,password,firstname,lastname) values(#{username},#{salt}, #{password},#{firstname}, #{lastname})")
+  @Options(useGeneratedKeys = true, keyProperty = "userid")
   int insert(User user);
 
 
