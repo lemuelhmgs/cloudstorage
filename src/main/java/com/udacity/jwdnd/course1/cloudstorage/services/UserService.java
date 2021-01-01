@@ -36,4 +36,6 @@ public class UserService {
 
 
   }
+
+  public int getuid(String username){return userMapper.getUserId(username);}
 }
