@@ -24,7 +24,7 @@ public interface  FileMapper {
   @Options(useGeneratedKeys = true, keyProperty = "fileId")
   int uploadFile(File file);
 
-  @Delete("Delete from FILES where fileId = #{fileId")
+  @Delete("Delete from FILES where fileId = #{fileId}")
   int deleteUserFile(Integer userid);
 
   @Select("SELECT filename FROM FILES WHERE userid = #{userid} and filename = #{filename}")

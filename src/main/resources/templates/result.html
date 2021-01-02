@@ -15,8 +15,9 @@
                 <span>Your changes were successfully saved. Click <a th:href="@{/home}">here</a> to continue.</span>
             </div>
             <div class="alert alert-danger fill-parent" th:if="${fileUploadError}">
-                <h1 class="display-5">Error</h1>
-                <span>Your changes were not saved. Click <a th:href="@{/home}">here</a> to continue.</span>
+                <h1 class="display-5" >Error</h1>
+                <span th:text="${fileUploadError}"> </span>
+                <span>Click <a th:href="@{/home}">here</a> to continue.</span>
             </div>
 
         </div>

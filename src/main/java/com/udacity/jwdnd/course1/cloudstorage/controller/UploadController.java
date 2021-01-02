@@ -38,21 +38,29 @@ public class UploadController {
 
     if(fileData.length == 0) { //File cant be empty
       fileUploadError = "Invalid File Found. Please try again";
-      return "result";
+
     }
 
     if (fileService.isDuplicateFileName(UID,multipartFile.getOriginalFilename())) {
       fileUploadError = "The File with same name already exists.";
-      return "result";
+
     }
 
-    File file = new File(multipartFile.getOriginalFilename(),multipartFile.getContentType(),fs,fileData,UID);
-    int rowsAdded = fileService.addFile(file);
-    if(rowsAdded < 1){
-      fileUploadError = "There was an error uploading File. Please try again.";}
+    if(fileUploadError == null){
+      File file = new File(multipartFile.getOriginalFilename(),multipartFile.getContentType(),fs,fileData,UID);
+      int rowsAdded = fileService.addFile(file);
+      if(rowsAdded < 1){
+        fileUploadError = "There was an error uploading File. Please try again.";
+      }
+    }
 
-    if (fileUploadError == null) { model.addAttribute("fileUploadSuccess", true); }
-    else { model.addAttribute("fileUploadError", fileUploadError); }
+
+    if (fileUploadError == null) {
+      model.addAttribute("fileUploadSuccess", true);
+    }
+    else {
+      model.addAttribute("fileUploadError", fileUploadError);
+    }
 
     return "result";
   }

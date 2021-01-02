@@ -50,7 +50,7 @@ public class HomeController {
   @GetMapping("/file/delete/{fileId}")
   public String deleteFile(@PathVariable Integer fileId) {
     fileService.deleteFile(fileId);
-    return "result";
+    return "home";
   }
 
   @GetMapping("/file/view/{fileId}")
