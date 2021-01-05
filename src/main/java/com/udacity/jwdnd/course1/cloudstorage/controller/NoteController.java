@@ -25,17 +25,16 @@ public class NoteController {
   }
 
   @PostMapping("/createNotes")
-  public String noteController(@ModelAttribute Note note, Authentication authentication, Model model){
+  public String noteController(Authentication authentication, @ModelAttribute Note note, Model model){
 
     System.out.println(note.getNotetitle() );
     System.out.println(note.getNotedescription());
     Integer UID = userService.getuid(authentication.getName());
     List<Note> notes = noteService.getAllNoteForUser(UID);
     note.setUserid(UID);
-    model.addAttribute("notes",note);
+    model.addAttribute("notes",this.noteService.getAllNoteForUser(UID));
 
 
-    //Note note1 = new Note(note.getNotetitle(),note.getNotedescription(),UID);
     if(note.getNoteid() != null){
       noteService.updateNote(note);
       return "home";
