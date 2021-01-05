@@ -18,14 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
 
   private final UserService userService;
+  private  final FileService fileService;
 
   public UploadController(UserService userService,
       FileService fileService) {
     this.userService = userService;
     this.fileService = fileService;
   }
-
-  private  final FileService fileService;
 
 
   @PostMapping("/upload")
