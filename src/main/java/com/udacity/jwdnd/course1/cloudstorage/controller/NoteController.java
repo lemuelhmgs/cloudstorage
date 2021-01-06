@@ -30,7 +30,7 @@ public class NoteController {
     System.out.println(note.getNotetitle() );
     System.out.println(note.getNotedescription());
     Integer UID = userService.getuid(authentication.getName());
-    List<Note> notes = noteService.getAllNoteForUser(UID);
+
     note.setUserid(UID);
     model.addAttribute("notes",this.noteService.getAllNoteForUser(UID));
 
