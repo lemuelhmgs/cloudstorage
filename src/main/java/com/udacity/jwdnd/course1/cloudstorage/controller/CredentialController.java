@@ -44,7 +44,9 @@ public class CredentialController {
     //}
 
     //model.addAttribute("creds",this.credentialService.getCredentialById(UID));
-    model.addAttribute("credentials", credentials);
+    model.addAttribute("creds", credentials);
+
+    System.out.println("================="+credential.getCredentialid());
 
     if(errorMessage == null){
       credential.setUserid(UID);

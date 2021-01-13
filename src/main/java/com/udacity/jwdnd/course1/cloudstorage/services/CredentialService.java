@@ -38,8 +38,8 @@ private final HashService hashService;
     return credentialMapper.updateCred(credential);
   }
 
-  public int checkDup(Integer userId, Integer credentialId){
-    return credentialMapper.checkIfExist(userId,credentialId);
+  public Credential checkDup(Integer credentialId){
+    return credentialMapper.checkIfExist(credentialId);
   }
 
 }

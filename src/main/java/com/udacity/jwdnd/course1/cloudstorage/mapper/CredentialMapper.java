@@ -27,8 +27,8 @@ public interface CredentialMapper {
   @Select("SELECT * FROM CREDENTIALS WHERE userid = #{userid}")
   List<Credential> getAllCredByUserid(@Param("userid") Integer userid);
 
-  @Select("select * from CREDENTIALS where userid= #{userid} and credentialid=#{credentialid}")
-  Integer checkIfExist(Integer userid,Integer credentialid);
+  @Select("select * from CREDENTIALS where credentialid=#{credentialid}")
+  Credential checkIfExist(Integer credentialid);
 
 
   @Insert("Insert into CREDENTIALS (url,username,key,password,userid) values(#{url},#{username}, #{key},#{password}, #{userid})")
@@ -38,7 +38,7 @@ public interface CredentialMapper {
   @Delete("Delete from CREDENTIALS where credentialid = #{credentialid}")
   int deleteByCredid(Integer credentialid);
 
-  @Update("update CREDENTIALS set url=#{url},username=#{username}, password=#{password} where credentialid=#{credentialid}")
+  @Update("update CREDENTIALS set url=#{url},username=#{username}, key=#{key}, password=#{password} where credentialid=#{credentialid}")
   Integer updateCred(Credential credential);
 
 
