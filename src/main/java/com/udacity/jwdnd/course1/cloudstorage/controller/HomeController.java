@@ -1,7 +1,10 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.File;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
+import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
+import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
@@ -24,21 +27,34 @@ public class HomeController {
 
   private final FileService fileService;
   private final UserService userService;
-  @Autowired
-  private NoteService noteService;
+  private EncryptionService encryptionService;
+  private final NoteService noteService;
+  private final CredentialService credentialService;
 
   public HomeController(FileService fileService,
-      UserService userService) {
+      UserService userService,
+      EncryptionService encryptionService,
+      NoteService noteService,
+      CredentialService credentialService) {
     this.fileService = fileService;
     this.userService = userService;
-
+    this.encryptionService = encryptionService;
+    this.noteService = noteService;
+    this.credentialService = credentialService;
   }
+
+
 
   @GetMapping("/home")
   public String getHomePage(Authentication authentication, Model model){
     Integer UID = userService.getuid(authentication.getName());
     List<File> files = fileService.getAllFilesForUser(UID);
+    List<Note> notes = noteService.getAllNoteForUser(UID);
+    List<Credential> credentials = credentialService.getAllCredForUser(UID);
     model.addAttribute("files",files);
+    model.addAttribute("notes",notes);
+    model.addAttribute("creds",credentials);
+    model.addAttribute("encryptionService",encryptionService);
         return "home";
 }
 

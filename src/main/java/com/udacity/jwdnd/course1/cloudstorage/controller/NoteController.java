@@ -26,28 +26,61 @@ public class NoteController {
 
   @PostMapping("/createNotes")
   public String noteController(Authentication authentication, @ModelAttribute Note note, Model model){
-
+    String errorMessage = null;
+    System.out.println(note.getNoteid());
     System.out.println(note.getNotetitle() );
     System.out.println(note.getNotedescription());
     Integer UID = userService.getuid(authentication.getName());
-    List<Note> notes = noteService.getAllNoteForUser(UID);
-    note.setUserid(UID);
+
+
     model.addAttribute("notes",this.noteService.getAllNoteForUser(UID));
 
+    int currentCredId = 0;
 
-    if(note.getNoteid() != null){
-      noteService.updateNote(note);
-      return "home";
+    if(errorMessage == null){
+      note.setUserid(UID);
+      if(note.getNoteid() != null){
+        currentCredId = noteService.updateNote(note);
+
+      } else{
+        currentCredId = noteService.addNote(note);
+      }
+
+      if(currentCredId < 0){
+        errorMessage = "Something happened when adding credential. Please try again!";
+      }
+
+    }
+
+    if (errorMessage == null){
+      model.addAttribute("updateSuccess", true);
+    } else {
+      model.addAttribute("updateFail", errorMessage);
     }
 
 
-    noteService.addNote(note);
-    return "home";
+    return "result";
   }
 
   @GetMapping("/note/delete/{noteid}")
-  public String deleteNote(@PathVariable Integer noteid){
-    noteService.deleteNote(noteid);
-    return "home";
+  public String deleteNote(@PathVariable Integer noteid, Model model){
+
+    String errorMessage = null;
+    int currentCredId = 0;
+    if(errorMessage == null){
+      currentCredId = noteService.deleteNote(noteid);
+
+      if(currentCredId<1){
+        errorMessage = "There was an error when deleting Note. Please try again!";
+      }
+    }
+
+    if(errorMessage == null){
+      model.addAttribute("updateSuccess", true);
+    }else {
+      model.addAttribute("updateFail", errorMessage);
+    }
+
+    return "result";
   }
 }
