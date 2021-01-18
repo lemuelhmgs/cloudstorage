@@ -7,9 +7,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
+  private CommonUtil util;
 
   LoginPage(WebDriver driver){
+
     PageFactory.initElements(driver, this);
+     util = new CommonUtil(driver);
   }
   @FindBy(id = "inputUsername")
   private WebElement usernameInputField;
@@ -23,22 +26,27 @@ public class LoginPage {
   @FindBy(id = "error-msg")
   private WebElement errorMessageText;
 
-  @FindBy(id= "su")
+  @FindBy(id ="signup-link")
+  private WebElement signUpLink;
 
 
 
   public void signIn(String userName, String password){
-    usernameInputField.sendKeys(userName);
-    passwordInputField.sendKeys(password);
-    submitButton.click();
+    util.enterText(usernameInputField,userName);
+    util.enterText(passwordInputField,password);
+    util.click(submitButton);
+
   }
 
-  public void enterValue(WebElement element, String value){
-    element.sendKeys(value);
+  public void signUp(){
+    util.click(signUpLink);
   }
+
 
   public String getErrMessage(){
-    return errorMessageText.getText();
+
+    return util.getText(errorMessageText);
+
   }
 
 }
